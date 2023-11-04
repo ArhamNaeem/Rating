@@ -75,7 +75,3 @@ async def calculate_similarity(url_input: URLInput):
     similarity_score = similarity[0][0]
 
     return similarity_score  # Return the similarity score as a float
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="localhost", port=7000)
