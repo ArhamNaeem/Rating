@@ -82,3 +82,7 @@ async def calculate_similarity(url_input: URLInput):
         "keyword_score": keyword_score
     }
     return response  # Return the similarity score
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="localhost", port=7000)
