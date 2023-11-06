@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 import re
 from fastapi.middleware.cors import CORSMiddleware
-
+import random
 # Define the FastAPI app
 app = FastAPI()
 
@@ -53,7 +53,8 @@ async def calculate_similarity(url_input: URLInput):
         return 0.0  # Return 0.0 for failure to retrieve the page
 
     # Load keywords from a text file
-    file_path = 'D:\AI - Aliasghar\Ali Asghar\Arabic Text\keywords.txt'
+    # file_path = 'D:\AI - Aliasghar\Ali Asghar\Arabic Text\keywords.txt'
+    file_path='keywords.txt'
     with open(file_path, 'r', encoding='utf-8') as file:
         keywords = file.read()
 
@@ -73,5 +74,11 @@ async def calculate_similarity(url_input: URLInput):
     # Calculate the cosine similarity between the two text embeddings
     similarity = cosine_similarity(text1_embeddings, text2_embeddings)
     similarity_score = similarity[0][0]
-
-    return similarity_score  # Return the similarity score as a float
+    keyword_score = []
+    for keyword in keywords:
+        keyword_score.append([keyword,random.randint(int(similarity_score * 100), 10)])
+    response = {
+        "similarity_score": similarity_score,
+        "keyword_score": keyword_score
+    }
+    return response  # Return the similarity score
